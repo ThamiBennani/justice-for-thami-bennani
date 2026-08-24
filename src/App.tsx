@@ -2,6 +2,7 @@ import { MouseEvent, useEffect, useState } from 'react'
 import { ArrowUpRight, Check, ChevronDown, Copy, Languages, Mail, Menu, MessageSquare, PenLine, Share2, X } from 'lucide-react'
 import { getCopy, languages, Language, seo, sources } from './content'
 import { Participation } from './Participation'
+import { ShareKit } from './ShareKit'
 
 const photo = '/images/thami-bennani.jpeg'
 const campaignHashtag = '#JusticeForThamiBennani'
@@ -53,7 +54,7 @@ function App() {
     return selectedLanguage === 'en' ? `${origin}/` : `${origin}/?lang=${selectedLanguage}`
   }
 
-  const siteUrl = getSiteUrl(language)
+  const siteUrl = getSiteUrl(language, canonicalOrigin)
 
   const selectLanguage = (selectedLanguage: Language) => {
     setLanguage(selectedLanguage)
@@ -130,7 +131,7 @@ function App() {
         <div className="hero-shade" />
         <div className="hero-content">
           <p className="eyebrow light"><span />{copy.heroTag}</p>
-          <p className="campaign-hashtag">{campaignHashtag}</p>
+          <p className="campaign-hashtag" dir="ltr">{campaignHashtag}</p>
           <h1>{copy.title}</h1>
           <p className="hero-subtitle">{copy.subtitle}</p>
           <p className="hero-body">{copy.heroBody}</p>
@@ -226,9 +227,9 @@ function App() {
         ))}</div>
       </section>
 
-      <section className="action-section">
-        <div><p className="eyebrow light">{copy.principle}</p><p className="action-hashtag">{campaignHashtag}</p><h2>{copy.actionTitle}</h2><p>{copy.actionBody}</p></div>
-        <button className="button paper" onClick={copySiteUrl}>{copied ? <Check size={18} /> : <Copy size={18} />}{copied ? copy.copied : copy.copyLink}</button>
+      <section className="action-section" id="share">
+        <div className="action-intro"><p className="eyebrow light">{copy.principle}</p><p className="action-hashtag" dir="ltr">{campaignHashtag}</p><h2>{copy.actionTitle}</h2><p>{copy.actionBody}</p></div>
+        <ShareKit language={language} title={copy.title} subtitle={copy.subtitle} siteUrl={siteUrl} hashtag={campaignHashtag} />
       </section>
 
       <footer><a className="brand" href="#top"><span className="brand-mark">TB</span><span>Justice for Thami</span></a><p>{copy.disclaimer}</p><small>{copy.updated}</small></footer>
