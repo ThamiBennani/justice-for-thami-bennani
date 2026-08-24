@@ -18,6 +18,16 @@ const messageLabels: Record<Language, string> = {
   en: 'Send a private message', ar: 'أرسل رسالة خاصة', fr: 'Envoyer un message privé', es: 'Enviar mensaje privado',
   de: 'Private Nachricht senden', tr: 'Özel mesaj gönder', ja: '非公開メッセージを送る', zh: '发送私密消息',
 }
+const languageLabels: Record<Language, { button: string; menu: string }> = {
+  en: { button: 'Language', menu: 'Choose your language' },
+  ar: { button: 'اللغة', menu: 'اختر لغتك' },
+  fr: { button: 'Langue', menu: 'Choisissez votre langue' },
+  es: { button: 'Idioma', menu: 'Elige tu idioma' },
+  de: { button: 'Sprache', menu: 'Sprache auswählen' },
+  tr: { button: 'Dil', menu: 'Dilinizi seçin' },
+  ja: { button: '言語', menu: '言語を選択' },
+  zh: { button: '语言', menu: '选择语言' },
+}
 const supporterPhotos = [
   { src: '/images/supporters/supporters-stadium-01.jpg', width: 1024, height: 1536 },
   { src: '/images/supporters/supporters-stadium-02.jpg', width: 1166, height: 1989 },
@@ -113,12 +123,16 @@ function App() {
         </nav>
         <div className="header-actions">
           <div className="language-picker">
-            <button className="language-button" onClick={() => setLanguageOpen(!languageOpen)} aria-expanded={languageOpen} aria-label="Choose language">
-              <Languages size={17} /><span>{languages[language]}</span><ChevronDown size={15} />
+            <button className="language-button" onClick={() => setLanguageOpen(!languageOpen)} aria-expanded={languageOpen} aria-haspopup="menu" aria-label={`${languageLabels[language].button}: ${languages[language]}`}>
+              <span className="language-icon"><Languages size={19} /></span>
+              <span className="language-button-copy"><small>{languageLabels[language].button}</small><strong>{languages[language]}</strong></span>
+              <ChevronDown className="language-chevron" size={16} />
             </button>
-            {languageOpen && <div className="language-menu">{Object.entries(languages).map(([code, label]) => (
-              <button key={code} className={code === language ? 'active' : ''} onClick={() => selectLanguage(code as Language)}>
-                <span>{label}</span>{code === language && <Check size={15} />}
+            {languageOpen && <div className="language-menu" role="menu">
+              <p>{languageLabels[language].menu}</p>
+              {Object.entries(languages).map(([code, label]) => (
+              <button key={code} role="menuitemradio" aria-checked={code === language} className={code === language ? 'active' : ''} onClick={() => selectLanguage(code as Language)}>
+                <span><small>{code.toUpperCase()}</small>{label}</span>{code === language && <Check size={15} />}
               </button>
             ))}</div>}
           </div>
