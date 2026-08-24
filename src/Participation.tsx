@@ -146,7 +146,10 @@ export function Participation({ language }: { language: Language }) {
     <div className="section-heading"><h2>{copy.title}</h2><p>{copy.intro}</p></div>
     <article className="petition-panel" id="petition">
       <div className="petition-copy"><PenLine size={24} /><h3>{copy.petition}</h3><p>{copy.petitionBody}</p>
-        <div className="petition-count"><strong>{count.toLocaleString(language)}</strong><span>{copy.signatures}</span><small>{copy.goal}: 10,000</small></div>
+        <div className="petition-count">
+          <div className="petition-count-value"><strong className="notranslate" translate="no" dir="ltr">{count.toLocaleString(language)}</strong><span>{copy.signatures}</span></div>
+          <small>{copy.goal}: 10,000</small>
+        </div>
         <div className="progress" aria-label={`${count} / 10000`}><span style={{ width: `${Math.min(100, count / 100)}%` }} /></div>
         {signers.length > 0 && <div className="signer-feed" aria-live="polite">
           <p>{signerLabels[language]}</p>
