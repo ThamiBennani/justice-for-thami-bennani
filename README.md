@@ -27,7 +27,7 @@ Do not commit credentials or private data to this repository.
 
 ## Participation backend
 
-Petition signatures, newsletter consent, and private messages use an Azure Function with Azure Table Storage. Petition emails are retained only as salted, one-way fingerprints and signer identities are not exposed by the public API. Newsletter email addresses remain private, and the message form requests no identity.
+Petition signatures, newsletter consent, and private messages use an Azure Function with Azure Table Storage. Petition email is optional; when provided, it is retained only as a salted, one-way fingerprint. Signer identities are not exposed by the public API. Newsletter email addresses remain private, and the message form requests no identity.
 
 1. Select the intended Azure subscription and keep each public domain in a separate resource group.
 2. Create an Azure Email Communication Services resource and provision either an Azure-managed sender domain or a verified custom sender domain. Create an Azure Communication Services resource, connect that email domain under **Email → Domains**, and copy its connection string from **Keys**.

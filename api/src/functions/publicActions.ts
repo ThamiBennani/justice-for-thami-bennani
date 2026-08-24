@@ -217,11 +217,11 @@ async function publicActions(request: HttpRequest, context: InvocationContext): 
       const name = clean(body.name)
       const email = clean(body.email).toLowerCase()
       const country = clean(body.country)
-      if (name.length < 2 || name.length > 100 || country.length < 2 || country.length > 80 || email.length > 254 || !emailPattern.test(email)) return response(request, { message: 'Invalid petition details.' }, 400)
+      if (name.length < 2 || name.length > 100 || country.length < 2 || country.length > 80 || email.length > 254 || (email && !emailPattern.test(email))) return response(request, { message: 'Invalid petition details.' }, 400)
       try {
-        await addSignature(table, { partitionKey: 'petition', rowKey: hashEmail(email), name, country, language, createdAt: now })
+        await addSignature(table, { partitionKey: 'petition', rowKey: email ? hashEmail(email) : randomUUID(), name, country, language, createdAt: now })
       } catch (error) {
-        if ((error as Error).message === 'DUPLICATE_SIGNATURE') return response(request, { message: 'This email has already signed.' }, 409)
+        if ((error as Error).message === 'DUPLICATE_SIGNATURE') return response(request, { message: email ? 'This email has already signed.' : 'This signature could not be recorded.' }, 409)
         throw error
       }
       await addPetitionFeedEntry(table, name, now)

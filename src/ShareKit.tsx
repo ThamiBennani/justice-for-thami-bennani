@@ -170,8 +170,9 @@ export function ShareKit({ language, title, subtitle, siteUrl, hashtag }: { lang
   const [format, setFormat] = useState<ShareFormat>('story')
   const [status, setStatus] = useState<'idle' | 'caption' | 'link' | 'downloaded' | 'shared'>('idle')
   const rtl = language === 'ar'
-  const caption = `${title}\n${subtitle}\n\n${copy.callToAction}\n${siteUrl}\n\n${hashtag}`
-  const encodedUrl = encodeURIComponent(siteUrl)
+  const petitionUrl = `${siteUrl}#petition`
+  const caption = `${title}\n${subtitle}\n\n${copy.callToAction}\n${petitionUrl}\n\n${hashtag}`
+  const encodedUrl = encodeURIComponent(petitionUrl)
   const encodedCaption = encodeURIComponent(caption)
 
   const showStatus = (nextStatus: Exclude<typeof status, 'idle'>) => {
@@ -180,7 +181,7 @@ export function ShareKit({ language, title, subtitle, siteUrl, hashtag }: { lang
   }
 
   const downloadCard = async () => {
-    const blob = await createCampaignCard(format, title, subtitle, siteUrl, hashtag, rtl)
+    const blob = await createCampaignCard(format, title, subtitle, petitionUrl, hashtag, rtl)
     const objectUrl = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = objectUrl
@@ -191,9 +192,9 @@ export function ShareKit({ language, title, subtitle, siteUrl, hashtag }: { lang
   }
 
   const shareToApps = async () => {
-    const blob = await createCampaignCard(format, title, subtitle, siteUrl, hashtag, rtl)
+    const blob = await createCampaignCard(format, title, subtitle, petitionUrl, hashtag, rtl)
     const file = new File([blob], `justice-for-thami-${format}.png`, { type: 'image/png' })
-    const shareData = { title, text: caption, url: siteUrl, files: [file] }
+    const shareData = { title, text: caption, url: petitionUrl, files: [file] }
     try {
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
         await navigator.share(shareData)
@@ -223,7 +224,7 @@ export function ShareKit({ language, title, subtitle, siteUrl, hashtag }: { lang
       <div className={`share-preview ${format}`} role="img" aria-label={copy.assetAlt}>
         <img src="/images/thami-bennani.jpeg" alt="" />
         <div className="share-preview-shade" />
-        <div className="share-preview-copy"><span /><strong>{title}</strong><p>{subtitle}</p><small dir="ltr">{hashtag}</small><b dir="ltr">{siteUrl.replace(/^https?:\/\//, '')}</b></div>
+        <div className="share-preview-copy"><span /><strong>{title}</strong><p>{subtitle}</p><small dir="ltr">{hashtag}</small><b dir="ltr">{petitionUrl.replace(/^https?:\/\//, '')}</b></div>
       </div>
       <div className="share-tools">
         <div className="share-format" role="group" aria-label="Social image format">
@@ -243,7 +244,7 @@ export function ShareKit({ language, title, subtitle, siteUrl, hashtag }: { lang
         </div>
         <div className="share-commands">
           <button onClick={() => copyValue(caption, 'caption')}>{status === 'caption' ? <Check size={17} /> : <Copy size={17} />}{status === 'caption' ? copy.captionCopied : copy.copyCaption}</button>
-          <button onClick={() => copyValue(siteUrl, 'link')}>{status === 'link' ? <Check size={17} /> : <Copy size={17} />}{status === 'link' ? copy.linkCopied : copy.copyLink}</button>
+          <button onClick={() => copyValue(petitionUrl, 'link')}>{status === 'link' ? <Check size={17} /> : <Copy size={17} />}{status === 'link' ? copy.linkCopied : copy.copyLink}</button>
           <button onClick={downloadCard}>{status === 'downloaded' ? <Check size={17} /> : <Download size={17} />}{status === 'downloaded' ? copy.downloaded : copy.download}</button>
         </div>
         {status === 'shared' && <p className="share-status" role="status">{copy.shared}</p>}

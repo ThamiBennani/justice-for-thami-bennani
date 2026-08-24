@@ -65,14 +65,18 @@ const signerLabels: Record<Language, string> = {
 }
 
 const petitionPrivacy: Record<Language, string> = {
-  en: 'Only your initials may appear in the public signer list. Your full name and email remain private, and your email is converted to a one-way fingerprint to prevent duplicate signatures.',
-  ar: 'قد تظهر الأحرف الأولى من اسمك فقط في قائمة الموقعين العامة. يظل اسمك الكامل وبريدك الإلكتروني سريين، ويُحوّل البريد إلى بصمة أحادية الاتجاه لمنع التوقيعات المكررة.',
-  fr: "Seules vos initiales peuvent apparaître dans la liste publique des signataires. Votre nom complet et votre e-mail restent privés, et l'e-mail est transformé en empreinte irréversible pour éviter les doublons.",
-  es: 'Solo tus iniciales pueden aparecer en la lista pública de firmantes. Tu nombre completo y correo permanecen privados, y el correo se transforma en una huella irreversible para evitar duplicados.',
-  de: 'Nur Ihre Initialen können in der öffentlichen Liste erscheinen. Ihr vollständiger Name und Ihre E-Mail bleiben privat; die E-Mail wird zur Vermeidung von Duplikaten in einen unumkehrbaren Fingerabdruck umgewandelt.',
-  tr: 'Herkese açık listede yalnızca adınızın baş harfleri görünebilir. Tam adınız ve e-postanız gizli kalır; e-posta tekrar imzaları önlemek için geri döndürülemez bir parmak izine çevrilir.',
-  ja: '公開署名者一覧にはイニシャルのみが表示される場合があります。氏名とメールアドレスは非公開のままで、重複防止のためメールは元に戻せない識別値に変換されます。',
-  zh: '公开签署者列表中只会显示您的姓名首字母。您的完整姓名和邮箱保持私密，邮箱将转换为不可逆指纹以防止重复签名。',
+  en: 'Only your initials may appear publicly. Email is optional; when provided, it remains private and is converted to a one-way fingerprint to prevent duplicate signatures.',
+  ar: 'قد تظهر الأحرف الأولى من اسمك فقط علنًا. البريد الإلكتروني اختياري؛ وإذا قدمته فسيظل سريًا ويُحوّل إلى بصمة أحادية الاتجاه لمنع التوقيعات المكررة.',
+  fr: "Seules vos initiales peuvent apparaître publiquement. L'e-mail est facultatif ; s'il est fourni, il reste privé et devient une empreinte irréversible pour éviter les doublons.",
+  es: 'Solo tus iniciales pueden aparecer públicamente. El correo es opcional; si lo facilitas, seguirá siendo privado y se convertirá en una huella irreversible para evitar duplicados.',
+  de: 'Nur Ihre Initialen können öffentlich erscheinen. Die E-Mail ist optional; falls angegeben, bleibt sie privat und wird zur Vermeidung von Duplikaten in einen unumkehrbaren Fingerabdruck umgewandelt.',
+  tr: 'Herkese açık olarak yalnızca adınızın baş harfleri görünebilir. E-posta isteğe bağlıdır; verilirse gizli kalır ve tekrar imzaları önlemek için geri döndürülemez bir parmak izine çevrilir.',
+  ja: '公開されるのはイニシャルのみです。メールアドレスは任意で、入力した場合も非公開のまま、重複防止のため元に戻せない識別値に変換されます。',
+  zh: '公开显示的只会是您的姓名首字母。邮箱为选填；如提供，邮箱将保持私密，并转换为不可逆指纹以防止重复签署。',
+}
+
+const optionalLabels: Record<Language, string> = {
+  en: 'optional', ar: 'اختياري', fr: 'facultatif', es: 'opcional', de: 'optional', tr: 'isteğe bağlı', ja: '任意', zh: '选填',
 }
 
 function ParticipationForm({ action, language, copy, countChanged }: { action: PublicAction; language: Language; copy: ParticipationCopy; countChanged: () => void }) {
@@ -98,7 +102,7 @@ function ParticipationForm({ action, language, copy, countChanged }: { action: P
     <input className="honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
     {action === 'petition' && <>
       <label>{copy.name}<input name="name" minLength={2} maxLength={100} required disabled={!configured} /></label>
-      <label>{copy.email}<input name="email" type="email" maxLength={254} required disabled={!configured} /></label>
+      <label>{copy.email} ({optionalLabels[language]})<input name="email" type="email" maxLength={254} disabled={!configured} /></label>
       <label>{copy.country}<input name="country" minLength={2} maxLength={80} required disabled={!configured} /></label>
     </>}
     {action === 'newsletter' && <>
