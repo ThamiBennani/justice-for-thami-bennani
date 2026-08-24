@@ -1,0 +1,19 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env*
+!.env.example
+api/local.settings.json
+api/function.zip
+
+# Keep source evidence local; commit only the folder structure and manifest.
+source-materials/articles/*
+source-materials/photos/*
+source-materials/videos/*
+source-materials/audio/*
+source-materials/court-records/*
+source-materials/social-media/*
+source-materials/notes-and-transcripts/*
+source-materials/publication-ready/*
+!source-materials/**/.gitkeep
