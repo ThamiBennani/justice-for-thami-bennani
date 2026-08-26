@@ -7,7 +7,7 @@ const allowedOrigins = new Set((process.env.ALLOWED_ORIGINS || '')
   .split(',')
   .map(origin => origin.trim())
   .filter(Boolean))
-const languages = new Set(['en', 'ar', 'fr', 'es', 'de', 'tr', 'ja', 'zh'])
+const languages = new Set(['en', 'ar', 'fr', 'es', 'de', 'tr', 'it', 'zgh', 'nl', 'ja', 'zh'])
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const tableName = 'publicactions'
 const welcomeQueueName = 'newsletter-welcome'

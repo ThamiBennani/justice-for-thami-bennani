@@ -41,6 +41,24 @@ const messages: Record<string, { subject: string; heading: string; body: string;
     body: 'Thami Bennani davasıyla ilgili önemli mahkeme ve kampanya gelişmelerine artık abonesiniz.',
     spam: 'Bülteni kaçırmamak için bu göndericiyi kişilerinize ekleyin ve spam ya da gereksiz klasörünüzü kontrol edin.',
   },
+  it: {
+    subject: "Grazie per l'iscrizione",
+    heading: "Grazie per l'iscrizione",
+    body: 'Ora riceverai gli aggiornamenti più importanti sul tribunale e sulla mobilitazione relativi al caso Thami Bennani.',
+    spam: 'Per non perdere la newsletter, aggiungi questo mittente ai contatti e controlla la cartella della posta indesiderata.',
+  },
+  zgh: {
+    subject: 'ⵜⴰⵏⵎⵎⵉⵔⵜ ⴼ ⵓⵍⴽⴰⵎ',
+    heading: 'ⵜⴰⵏⵎⵎⵉⵔⵜ ⴼ ⵓⵍⴽⴰⵎ',
+    body: 'ⵜⵍⴽⵎⴷ ⴷⵖⵉ ⴰⴼⴰⴷ ⴰⴷ ⴽ ⵉⴷ ⴰⵡⴹⵏ ⵉⵎⴰⵢⵏⵓⵜⵏ ⵉⵎⵇⵇⵔⴰⵏⵏ ⵏ ⵜⵎⵀⵍⴰ ⴷ ⵜⵎⵙⴰⵍⵜ ⵏ ⵜⴰⵎⵉ ⴱⵏⴰⵏⵉ.',
+    spam: 'ⴰⴼⴰⴷ ⴰⴷ ⴽ ⵉⴷ ⵉⵍⴽⵎ ⵓⵍⵖⵓ، ⵔⵏⵓ ⴰⵎⴰⵣⴰⵏ ⴰⴷ ⵖⵔ ⵉⵎⴷⵔⴰⵡⵏ ⵏⵏⴽ، ⵙⵙⵉⴳⴳⵍ ⵓⵍⴰ ⴰⴽⴰⵔⴰⵎ ⵏ spam.',
+  },
+  nl: {
+    subject: 'Dank voor uw inschrijving',
+    heading: 'Dank voor uw inschrijving',
+    body: 'U ontvangt voortaan belangrijke updates over de rechtszaak en de campagne rond de zaak van Thami Bennani.',
+    spam: 'Voeg deze afzender toe aan uw contacten en controleer uw spammap om er zeker van te zijn dat u de nieuwsbrief ontvangt.',
+  },
   ja: {
     subject: 'ご登録ありがとうございます',
     heading: 'ご登録ありがとうございます',
@@ -80,6 +98,7 @@ async function newsletterWelcome(message: unknown, context: InvocationContext) {
   const language = String(subscriber.language || 'en')
   const copy = messages[language] || messages.en
   const direction = language === 'ar' ? 'rtl' : 'ltr'
+  const fontFamily = language === 'zgh' ? "'Noto Sans Tifinagh','Segoe UI',sans-serif" : 'Arial,sans-serif'
   const client = new EmailClient(emailConnectionString)
   const poller = await client.beginSend({
     senderAddress,
@@ -87,7 +106,7 @@ async function newsletterWelcome(message: unknown, context: InvocationContext) {
     content: {
       subject: copy.subject,
       plainText: `${copy.heading}\n\n${copy.body}\n\n${copy.spam}\n\nhttps://thamibennani.com`,
-      html: `<div dir="${direction}" style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#171717;line-height:1.6"><h1 style="font-size:24px">${escapeHtml(copy.heading)}</h1><p>${escapeHtml(copy.body)}</p><p>${escapeHtml(copy.spam)}</p><p><a href="https://thamibennani.com">thamibennani.com</a></p></div>`,
+      html: `<div dir="${direction}" style="font-family:${fontFamily};max-width:600px;margin:auto;color:#171717;line-height:1.6"><h1 style="font-size:24px">${escapeHtml(copy.heading)}</h1><p>${escapeHtml(copy.body)}</p><p>${escapeHtml(copy.spam)}</p><p><a href="https://thamibennani.com">thamibennani.com</a></p></div>`,
     },
   })
   const result = await poller.pollUntilDone()

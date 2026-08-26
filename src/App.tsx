@@ -8,15 +8,15 @@ const photo = '/images/thami-bennani.jpeg'
 const campaignHashtag = '#JusticeForThamiBennani'
 const petitionLabels: Record<Language, string> = {
   en: 'Sign the petition', ar: 'وقّع العريضة', fr: 'Signer la pétition', es: 'Firmar la petición',
-  de: 'Petition unterschreiben', tr: 'Dilekçeyi imzala', ja: '署名する', zh: '签署请愿',
+  de: 'Petition unterschreiben', tr: 'Dilekçeyi imzala', it: 'Firma la petizione', zgh: 'ⵣⵎⵎⴻⵎ ⴳ ⵜⵓⵜⵜⵔⴰ', nl: 'Onderteken de petitie', ja: '署名する', zh: '签署请愿',
 }
 const newsletterLabels: Record<Language, string> = {
   en: 'Get case updates', ar: 'توصل بالمستجدات', fr: "Recevoir l'actualité", es: 'Recibir novedades',
-  de: 'Neuigkeiten erhalten', tr: 'Gelişmeleri al', ja: '最新情報を受け取る', zh: '接收最新消息',
+  de: 'Neuigkeiten erhalten', tr: 'Gelişmeleri al', it: 'Ricevi aggiornamenti', zgh: 'ⴰⵡⵉ ⵉⵎⴰⵢⵏⵓⵜⵏ', nl: 'Ontvang updates', ja: '最新情報を受け取る', zh: '接收最新消息',
 }
 const messageLabels: Record<Language, string> = {
   en: 'Send a private message', ar: 'أرسل رسالة خاصة', fr: 'Envoyer un message privé', es: 'Enviar mensaje privado',
-  de: 'Private Nachricht senden', tr: 'Özel mesaj gönder', ja: '非公開メッセージを送る', zh: '发送私密消息',
+  de: 'Private Nachricht senden', tr: 'Özel mesaj gönder', it: 'Invia un messaggio privato', zgh: 'ⴰⵣⵏ ⵉⵣⵏ ⵓⵙⵍⵉⴳ', nl: 'Stuur een privébericht', ja: '非公開メッセージを送る', zh: '发送私密消息',
 }
 const languageLabels: Record<Language, { button: string; menu: string }> = {
   en: { button: 'Language', menu: 'Choose your language' },
@@ -25,6 +25,9 @@ const languageLabels: Record<Language, { button: string; menu: string }> = {
   es: { button: 'Idioma', menu: 'Elige tu idioma' },
   de: { button: 'Sprache', menu: 'Sprache auswählen' },
   tr: { button: 'Dil', menu: 'Dilinizi seçin' },
+  it: { button: 'Lingua', menu: 'Scegli la tua lingua' },
+  zgh: { button: 'ⵜⵓⵜⵍⴰⵢⵜ', menu: 'ⵙⵜⵉ ⵜⵓⵜⵍⴰⵢⵜ ⵏⵏⴽ' },
+  nl: { button: 'Taal', menu: 'Kies uw taal' },
   ja: { button: '言語', menu: '言語を選択' },
   zh: { button: '语言', menu: '选择语言' },
 }
